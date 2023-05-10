@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Setting up game manager that can be referenced from any class in the project. 
+    public static GameManager Instance;
+    //example points variable
+    public int points = 0;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this; //If there is no game instance on start up...then set the game instance variable. 
+        }
+        else
+        {
+            Debug.LogWarning("trying to create a second instance of the game manager.");
+            Destroy(this);
+        }
+        DontDestroyOnLoad(this.gameObject); //this.Gameobject gets the owner
+    }
     // Start is called before the first frame update
     void Start() 
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
