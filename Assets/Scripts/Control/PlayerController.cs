@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(MachinePawn))]
 public class PlayerController : Controller
 {
+    public KeyCode forwardKeyCode;
+    public KeyCode backwardKeyCode;
+    public KeyCode leftKeyCode;
+    public KeyCode rightKeyCode;
     private MachinePawn playerPawn;
     // Start is called before the first frame update
     public override void Start() //overides Controller Start
@@ -22,20 +26,20 @@ public class PlayerController : Controller
 
     private void ProcessInputs()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(forwardKeyCode))
         {
             playerPawn.MoveForward();
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(backwardKeyCode))
         {
             playerPawn.MoveBackward();
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(leftKeyCode))
         {
             playerPawn.Rotate(-1f); //f converts it from a float to an int, saves a step
 
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(rightKeyCode))
         {
             playerPawn.Rotate(1f);
         }
