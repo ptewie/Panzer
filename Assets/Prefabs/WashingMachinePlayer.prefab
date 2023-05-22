@@ -7,9 +7,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2208675986435690712, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0021107574
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208675986435690712, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.010664605
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208675986435690712, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208675986435690712, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 7677746769232426486, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
       propertyPath: m_Name
-      value: WashingMachineCWashingMachinePlayer
+      value: WashingMachinePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 7873851402316563222, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
       propertyPath: m_RootOrder
@@ -74,6 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a056f3c7fa38a41aca099e0f9ac51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardMoveSpeed: 10
+  backwardMoveSpeed: 9
+  machineRotationSpeed: 10
 --- !u!114 &-3613240425967921527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba6443837254eb4caff58d8a05510a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardKeyCode: 0
+  backwardKeyCode: 0
+  leftKeyCode: 0
+  rightKeyCode: 0
