@@ -9,7 +9,7 @@ public abstract class Mover : MonoBehaviour
 
     }
 
-    public virtual void Rotate()
+    public virtual void Rotate(float rotationSpeed, float direction)
     {
 
     }

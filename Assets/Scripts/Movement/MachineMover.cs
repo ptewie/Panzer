@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class MachineMover : Mover
 {
     private Rigidbody machineRigidBody;
@@ -18,8 +19,10 @@ public class MachineMover : Mover
         base.Move(moveSpeed, direction);
     }
 
-    public override void Rotate()
+    public override void Rotate(float rotationSpeed, float direction)
     {
-        base.Rotate();
+        float yAngle = direction * Time.deltaTime * rotationSpeed;
+        transform.Rotate(0f, yAngle, 0f); // .Rotate(x value, y value, x value.)
+        base.Rotate(rotationSpeed, direction);
     }
 }

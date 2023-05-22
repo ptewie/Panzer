@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MachineMover))]
 public class MachinePawn : Pawn
 {
     private const float forwardDirection = 1f;
     private const float backwardDirection = -1f;
     public float forwardMoveSpeed = 10f;
-    public float backwardMoveSpeed = 9f; 
+    public float backwardMoveSpeed = 9f;
+    public float machineRotationSpeed = 10f;
+
     
     public override void MoveBackward()
     {
@@ -23,7 +26,7 @@ public class MachinePawn : Pawn
 
     public override void Rotate(float direction)
     {
-        Debug.Log("RO- TAT -ey");
+        mover.Rotate(machineRotationSpeed, direction);
         base.Rotate(direction);
     }
 
