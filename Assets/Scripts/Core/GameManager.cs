@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     //example points variable
     public int points = 0;
+    public List<PlayerController> players = new List<PlayerController>();
+    public List<AIController> enemies = new List<AIController>();
 
     private void Awake()
     {
@@ -22,7 +24,6 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject); //this.Gameobject gets the owner
     }
-    // Start is called before the first frame update
     void Start() 
     {
         
