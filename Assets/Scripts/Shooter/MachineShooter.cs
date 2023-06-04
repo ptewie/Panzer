@@ -1,18 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TankShooter : MonoBehaviour
+public class MachineShooter : Shooter
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform firepointTransform;
+
+    public override void Shoot(GameObject shellPrefab, float fireForce, float damageDone, float lifespan)
+    {
+        // Setting up projectile ----------------------------------------
+        GameObject newShell = Instantiate(shellPrefab, firepointTransform.position, firepointTransform.rotation) as GameObject; //spawn in a proj.
+        DamageOnHit damageOnHit = newShell.GetComponent<DamageOnHit>(); //adding the values onto the projectile
+        if (damageOnHit) //just asking if damageOnHit exists period
+        {
+            damageOnHit.damage = damageDone;
+            damageOnHit.owner = GetComponent<Pawn>(); //NOTE: possibly need reference to pawn? 
+        }
+        // Moving projectile forward ----------------------------------
+        Rigidbody rb = newShell.GetComponent<Rigidbody>();
+        if (rb) 
+        {
+            
+            rb.AddForce(firepointTransform.forward * fireForce); //makes the projectile move
+        }
+        Destroy(newShell, lifespan);
+        
+    }
+
+    public override void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+
     }
 }
