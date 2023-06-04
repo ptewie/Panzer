@@ -5,20 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(MachinePawn))]
 public class PlayerController : Controller
 {
+    //Key Codes
     public KeyCode forwardKeyCode;
     public KeyCode backwardKeyCode;
     public KeyCode leftKeyCode;
     public KeyCode rightKeyCode;
+    public KeyCode shootKeyCode;
+    //Game Objects and classes
     private MachinePawn playerPawn;
     // Start is called before the first frame update
     public override void Start() //overides Controller Start
     {
-        playerPawn = GetComponent<MachinePawn>(); // <- tells the function what it returns in the angle brackets ("<>") , so it looks at every component on the same game object it's on. 
+        playerPawn = GetComponent<MachinePawn>(); // assigns the player's pawn as MachinePawn
         
         if (GameManager.Instance) //Does the gamemanger exist
         {
             GameManager.Instance.players.Add(this); //if so, add PlayerController to the List, which then transfers to "players" list
         }
+        
+        
         base.Start();                         
     }
 
@@ -55,6 +60,11 @@ public class PlayerController : Controller
         if (Input.GetKey(rightKeyCode))
         {
             playerPawn.Rotate(1f);
+        }
+
+        if (Input.GetKey(shootKeyCode))
+        {
+          //  playerPawn.Shoot(); TO DO: add shoot functonality
         }
     }
 }

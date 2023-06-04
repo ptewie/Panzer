@@ -10,7 +10,7 @@ public abstract class Shooter : MonoBehaviour
     public abstract void Start();
   
     public abstract void Update();
-    public abstract void Shoot(GameObject shellPrefab, float fireForce, float damageDone, float lifespan);
+    public abstract void Shoot(GameObject shellPrefab, float fireForce, float fireRate, float damageDone, float lifespan);
 
 
 }
