@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MachineMover))]
+[RequireComponent(typeof(MachineMover))] 
+[RequireComponent(typeof(MachineShooter))]
 public class MachinePawn : Pawn
 {
     private const float forwardDirection = 1f;

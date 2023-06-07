@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     //example points variable
     public int points = 0;
-    public List<PlayerController> players = new List<PlayerController>();
-    public List<AIController> enemies = new List<AIController>();
+    public List<Controller> players = new List<Controller>();
+    public List<Controller> enemies = new List<Controller>();
 
     private void Awake()
     {
