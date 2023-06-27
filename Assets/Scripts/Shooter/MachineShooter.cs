@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MachineShooter : Shooter
 {
-    public Transform firepointTransform;
 
-    public override void Shoot(GameObject shellPrefab, float fireForce, float fireRate, float damageDone, float lifespan)
+    public override void Shoot(GameObject shellPrefab, float fireForce, float damageDone, float lifespan)
     {
         // Setting up projectile ----------------------------------------
         GameObject newShell = Instantiate(shellPrefab, firepointTransform.position, firepointTransform.rotation) as GameObject; //spawn in a proj.

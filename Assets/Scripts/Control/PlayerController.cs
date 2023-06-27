@@ -62,9 +62,9 @@ public class PlayerController : Controller
             playerPawn.Rotate(1f);
         }
 
-        if (Input.GetKey(shootKeyCode))
+        if (Input.GetKeyDown(shootKeyCode))
         {
-          //  playerPawn.Shoot(); TO DO: add shoot functonality
+            playerPawn.Shoot();
         }
     }
 }

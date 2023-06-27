@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Pawn : MonoBehaviour
 {
-    protected Mover mover; 
+    protected Mover mover;
+    protected Shooter shooter;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -28,6 +29,11 @@ public abstract class Pawn : MonoBehaviour
     }
 
     public virtual void Rotate(float direction) //float is telling which DIRECTION to rotate in
+    {
+
+    }
+
+    public virtual void Shoot()
     {
 
     }

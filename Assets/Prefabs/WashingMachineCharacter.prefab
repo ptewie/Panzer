@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 7873851402316563222}
   - component: {fileID: 3706512182380138263}
   - component: {fileID: 7996775507910058044}
+  - component: {fileID: 4873748366442717590}
+  - component: {fileID: 5929824867197587575}
+  - component: {fileID: 2887193035275855155}
   m_Layer: 0
   m_Name: WashingMachineCharacter
   m_TagString: Untagged
@@ -62,6 +65,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba7f1c62517b6247b7079605101e0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4873748366442717590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677746769232426486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd42a0fcfd371b4f8b120a7cc198812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  maxHealth: 100
+--- !u!114 &5929824867197587575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677746769232426486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5818722d8cfeb4db46206ffd836751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firepointTransform: {fileID: 2975697673191080430}
+--- !u!114 &2887193035275855155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677746769232426486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a056f3c7fa38a41aca099e0f9ac51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardMoveSpeed: 10
+  backwardMoveSpeed: 9
+  machineRotationSpeed: 10
+  fireForce: 1000
+  damageDone: 10
+  shellLifespan: 15
+  shellPrefab: {fileID: 1390525935506867676, guid: 2310fd8ed4946354f92703a005d757cb, type: 3}
+--- !u!1 &7803769814856840770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2975697673191080430}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2975697673191080430
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803769814856840770}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0.0032, y: 0.0592, z: 0.0193}
+  m_LocalScale: {x: 0.010385991, y: 0.011261592, z: 0.010385993}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2208675986435690712}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1813950536459892531
 PrefabInstance:
   m_ObjectHideFlags: 0

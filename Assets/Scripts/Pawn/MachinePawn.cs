@@ -11,6 +11,13 @@ public class MachinePawn : Pawn
     public float forwardMoveSpeed = 10f;
     public float backwardMoveSpeed = 9f;
     public float machineRotationSpeed = 10f;
+    public float fireForce = 1000f;
+    public float damageDone = 10f; 
+    public float shellLifespan = 15f;
+    public GameObject shellPrefab;
+    public float shotCooldownTimer = 1f;
+    private float secondsSinceLastShot = Mathf.Infinity;
+
 
     
     public override void MoveBackward()
@@ -31,15 +38,31 @@ public class MachinePawn : Pawn
         base.Rotate(direction);
     }
 
+
+
+
     // Start is called before the first frame update
     public override void Start()
     {
+        shooter = GetComponent<MachineShooter>();
         mover = GetComponent<MachineMover>();
+        base.Start();
     }
 
     // Update is called once per frame
     public override void Update()
     {
-        
+        secondsSinceLastShot += Time.deltaTime;
+        base.Update();
+    }
+   
+    public override void Shoot()
+    {
+        if (secondsSinceLastShot > shotCooldownTimer) 
+        {
+            shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
+            secondsSinceLastShot = 0f;
+            base.Shoot();
+        }
     }
 }
