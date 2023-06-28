@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Pawn : MonoBehaviour
 {
+
     protected Mover mover;
     protected Shooter shooter;
     // Start is called before the first frame update
@@ -37,4 +38,8 @@ public abstract class Pawn : MonoBehaviour
     {
 
     }
+
+    public abstract void RotateTowards(Vector3 targetPosition);
+
+
 }

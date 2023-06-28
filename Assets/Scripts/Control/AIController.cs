@@ -5,12 +5,14 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 {
     public enum AIState {  Guard, Chase, Flee, Patrol, Attack, Scan, BackToPost };
 
-    public AIState currentState = AIState.Guard; //Defualt State
-
+    public AIState currentState = AIState.Chase; //Defualt State
+    private float lastStateChangeTime = 0f;
+    public GameObject target;
 
 
     public override void Start()
     {
+        pawn = GetComponent<Pawn>();
         base.Start();
     }
 
@@ -79,7 +81,12 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     private void DoChaseState()
     {
-       // throw new NotImplementedException();
+        // throw new NotImplementedException();
+        //Turn to face target
+        pawn.RotateTowards(target.transform.position);
+        // Move forward if facing target
+        pawn.MoveForward();
+
     }
 
     private void DoPatrolState() 
@@ -99,5 +106,11 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         // throw new NotImplementedException();
     }
 
+    public void ChangeAIState(AIState newState) 
+    {
+        lastStateChangeTime = Time.time;
+        currentState = newState;
+
+    }
 }
 

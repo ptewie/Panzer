@@ -12,11 +12,11 @@ public class PlayerController : Controller
     public KeyCode rightKeyCode;
     public KeyCode shootKeyCode;
     //Game Objects and classes
-    private MachinePawn playerPawn;
+
     // Start is called before the first frame update
     public override void Start() //overides Controller Start
     {
-        playerPawn = GetComponent<MachinePawn>(); // assigns the player's pawn as MachinePawn
+        pawn = GetComponent<MachinePawn>(); // assigns the player's pawn as MachinePawn
         
         if (GameManager.Instance) //Does the gamemanger exist
         {
@@ -46,25 +46,25 @@ public class PlayerController : Controller
     {
         if (Input.GetKey(forwardKeyCode))
         {
-            playerPawn.MoveForward();
+            pawn.MoveForward();
         }
         if (Input.GetKey(backwardKeyCode))
         {
-            playerPawn.MoveBackward();
+            pawn.MoveBackward();
         }
         if (Input.GetKey(leftKeyCode))
         {
-            playerPawn.Rotate(-1f); //f converts it from a float to an int, saves a step
+            pawn.Rotate(-1f); //f converts it from a float to an int, saves a step
 
         }
         if (Input.GetKey(rightKeyCode))
         {
-            playerPawn.Rotate(1f);
+            pawn.Rotate(1f);
         }
 
         if (Input.GetKeyDown(shootKeyCode))
         {
-            playerPawn.Shoot();
+            pawn.Shoot();
         }
     }
 }
