@@ -18,7 +18,7 @@ public class PlayerController : Controller
     {
         pawn = GetComponent<MachinePawn>(); // assigns the player's pawn as MachinePawn
         
-        if (GameManager.Instance) //Does the gamemanger exist
+        if (GameManager.Instance) //Does the game manger exist
         {
             GameManager.Instance.players.Add(this); //if so, add PlayerController to the List, which then transfers to "players" list
         }

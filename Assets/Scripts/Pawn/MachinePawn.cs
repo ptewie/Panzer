@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(MachineShooter))]
 public class MachinePawn : Pawn
 {
-    private const float forwardDirection = 1f;
-    private const float backwardDirection = -1f;
+    public const float forwardDirection = 1f;
+    public const float backwardDirection = -1f;
     public float forwardMoveSpeed = 10f;
     public float backwardMoveSpeed = 9f;
     public float machineRotationSpeed = 10f;

@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class AIController : Controller  // asbtract means it cannot be instaitated
 {
-    public enum AIState {  Guard, Chase, Flee, Patrol, Attack, Scan, BackToPost };
+    public enum AIState {  Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost };
 
-    public AIState currentState = AIState.Chase; //Defualt State
+    public float attackRange = 100f;
+    public AIState currentState = AIState.Scan; //Default State
     private float lastStateChangeTime = 0f;
     public GameObject target;
+    public Transform post; 
 
 
     public override void Start()
     {
         pawn = GetComponent<Pawn>();
+        post = transform; //Whereever the enemy is spawned is the idle spot
         base.Start();
     }
 
@@ -26,41 +31,104 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     {
         switch (currentState)
         {
-            case AIState.Guard:
+            case AIState.Idle:
                 //Do the states behavior
-                DoGuardState();
+                DoIdleState();
                 //check for transitions
+                foreach (Controller playerController in GameManager.Instance.players) 
+                {
+                    if (CanSee(playerController.gameObject)) 
+                    {
+                        target = playerController.gameObject;
+                        ChangeAIState(AIState.Chase);
+                        return;//one decision is made, stop running the code
+                    }
+                    if (CanHear(playerController.gameObject)) 
+                    {
+                        ChangeAIState(AIState.Scan);
+                    }
+
+                }
                 break;
             case AIState.Attack:
                 //Do the states behavior
                 DoAttackState();
                 //check for transitions
+                if (Vector3.SqrMagnitude(target.transform.position - transform.position) > attackRange) 
+                {
+                    ChangeAIState(AIState.Chase);
+                    return;
+
+                }
+                if (!CanSee(target))
+                {
+                    target = null;
+                    ChangeAIState(AIState.Scan);
+                    return;
+                }
                 break;
+
             case AIState.Chase:
                 //Do the states behavior
                 DoChaseState();
                 //check for transitions
+                if (!CanSee(target)) 
+                {
+                    target = null;
+                    ChangeAIState(AIState.Scan);
+                    return;
+                }
+                // Checking for distance
+                if (Vector3.SqrMagnitude(target.transform.position - transform.position) < attackRange) 
+                {
+                    ChangeAIState(AIState.Attack);
+                    return;
+                }
                 break;
+
             case AIState.Flee:
                 //Do the states behavior  
                 DoFleeState();
                 //check for transitions
                 break;
+
             case AIState.Patrol:
                 //Do the states behavior
                 DoPatrolState();
                 //check for transitions
                 break;
+
             case AIState.Scan:
                 //Do the states behavior
                 DoScanState();
                 //check for transitions
+                foreach (Controller playerController in GameManager.Instance.players)
+                {
+                    if (CanSee(playerController.gameObject))
+                    {
+                        target = playerController.gameObject;
+                        ChangeAIState(AIState.Chase);
+                        return; //one decision is made, stop running the code
+                    }
+                }
+                if (Time.time - lastStateChangeTime > 3f) 
+                {
+                    ChangeAIState(AIState.BackToPost);
+                    return;
+                }
                 break;
+
             case AIState.BackToPost:
                 //Do the states behavior
                 DoBackToPostState();
                 //check for transitions
-                break;
+                if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= 1f)
+                {
+                    ChangeAIState(AIState.Idle);
+                    return;
+                }
+                        break;
+
             default:
                 Debug.LogWarning("AI controller does not have state implemented");
                 break;
@@ -68,15 +136,27 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         }
     }
 
-    private void DoGuardState() 
+    private bool CanHear(GameObject gameObject)
     {
-       // throw new NotImplementedException();
+        return false; //TODO: not this, this is a mad fake rn
+    }
+
+    private bool CanSee(GameObject gameObject)
+    {
+        return true;
+    }
+
+    private void DoIdleState() 
+    {
+        // throw new NotImplementedException(); 
 
     }
 
     private void DoAttackState()
     {
-       // throw new NotImplementedException();
+        // throw new NotImplementedException();
+        pawn.RotateTowards(target.transform.position);
+        pawn.Shoot();
     }
 
     private void DoChaseState()
@@ -95,7 +175,8 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     }
     private void DoScanState()
     {
-        // throw new NotImplementedException();
+        //Rotate Clockwise
+        pawn.Rotate(1f);
     }
     private void DoFleeState()
     {
@@ -104,6 +185,8 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     private void DoBackToPostState()
     {
         // throw new NotImplementedException();
+        pawn.RotateTowards(post.transform.position);
+        pawn.MoveForward();
     }
 
     public void ChangeAIState(AIState newState) 
