@@ -122,5 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb63fc2fea0ae643b69587f182bf677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 1
+  attackRange: 100
+  currentState: 0
   target: {fileID: 0}
+  post: {fileID: 0}
+  fieldOfView: 30

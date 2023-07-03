@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4873748366442717590}
   - component: {fileID: 5929824867197587575}
   - component: {fileID: 2887193035275855155}
+  - component: {fileID: 1103688426767150563}
   m_Layer: 0
   m_Name: WashingMachineCharacter
   m_TagString: Untagged
@@ -112,6 +113,20 @@ MonoBehaviour:
   shellLifespan: 15
   shellPrefab: {fileID: 1390525935506867676, guid: 2310fd8ed4946354f92703a005d757cb, type: 3}
   shotCooldownTimer: 1
+--- !u!114 &1103688426767150563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677746769232426486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d12aadbe029076429daccb099573666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  owner: {fileID: 0}
 --- !u!1 &7803769814856840770
 GameObject:
   m_ObjectHideFlags: 0

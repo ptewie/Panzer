@@ -11,7 +11,8 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public AIState currentState = AIState.Scan; //Default State
     private float lastStateChangeTime = 0f;
     public GameObject target;
-    public Transform post; 
+    public Transform post;
+    public float fieldOfView = 30f;
 
 
     public override void Start()
@@ -37,6 +38,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 //check for transitions
                 foreach (Controller playerController in GameManager.Instance.players) 
                 {
+                    
                     if (CanSee(playerController.gameObject)) 
                     {
                         target = playerController.gameObject;
@@ -79,7 +81,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     return;
                 }
                 // Checking for distance
-                if (Vector3.SqrMagnitude(target.transform.position - transform.position) < attackRange) 
+                if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= attackRange) 
                 {
                     ChangeAIState(AIState.Attack);
                     return;
@@ -127,7 +129,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     ChangeAIState(AIState.Idle);
                     return;
                 }
-                        break;
+                break;
 
             default:
                 Debug.LogWarning("AI controller does not have state implemented");
@@ -136,13 +138,34 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         }
     }
 
-    private bool CanHear(GameObject gameObject)
+    private bool CanHear(GameObject targetGameObject)
     {
-        return false; //TODO: not this, this is a mad fake rn
+        // looking for target noise maker
+        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();  
     }
 
-    private bool CanSee(GameObject gameObject)
+    private bool CanSee(GameObject targetGameObject)
     {
+        Vector3 agentToTargetVector = targetGameObject.transform.position - transform.position;
+        if (Vector3.Angle(agentToTargetVector, transform.forward) <= fieldOfView) 
+        {
+            Debug.Log("I see a player!");
+            Vector3 raycastDirection = targetGameObject.transform.position - pawn.transform.position;
+            RaycastHit hit;
+            Physics.Raycast(transform.position, raycastDirection, out hit);
+            //NOTE: Yes, This code is way different than what was offered in the example, but otherwise I get an error saying that the target
+            // game object is not set to an instance. Magic code ig?
+            if (Physics.Raycast(transform.position, raycastDirection, out hit)) 
+            {
+                if (hit.collider.transform.parent != null) 
+                {
+                    return (hit.collider.transform.parent.gameObject == targetGameObject);
+                }
+                
+            
+            }
+            
+        }
         return true;
     }
 
