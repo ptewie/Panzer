@@ -432,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4664874855189081530, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
       propertyPath: fieldOfView
-      value: 30
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4664874855189081530, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
       propertyPath: currentState
@@ -801,6 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f5bb06fa391e34da1f925b2aba6e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeDistance: 0
 --- !u!1 &1861149414
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,6 +938,10 @@ PrefabInstance:
       propertyPath: backwardKeyCode
       value: 115
       objectReference: {fileID: 0}
+    - target: {fileID: -1921086148298505127, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 437714878013968852, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1003,7 +1008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4764056590257328940, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38
+      value: 7.7
       objectReference: {fileID: 0}
     - target: {fileID: 4764056590257328940, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1011,7 +1016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4764056590257328940, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.3
+      value: -5.43
       objectReference: {fileID: 0}
     - target: {fileID: 4764056590257328940, guid: 670e2beef18701d4e8eebf19986ba839, type: 3}
       propertyPath: m_LocalRotation.w

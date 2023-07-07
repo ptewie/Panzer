@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+
+
 public class AIController : Controller  // asbtract means it cannot be instaitated
 {
     public enum AIState {  Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost };
@@ -13,6 +15,8 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public GameObject target;
     public Transform post;
     public float fieldOfView = 30f;
+    public float hearingDistance = 0f;
+
 
 
     public override void Start()
@@ -41,12 +45,14 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     
                     if (CanSee(playerController.gameObject)) 
                     {
+                        Debug.Log("I see you!");
                         target = playerController.gameObject;
                         ChangeAIState(AIState.Chase);
                         return;//one decision is made, stop running the code
                     }
                     if (CanHear(playerController.gameObject)) 
                     {
+                        Debug.Log("I can hear you!!");
                         ChangeAIState(AIState.Scan);
                     }
 
@@ -124,7 +130,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 //Do the states behavior
                 DoBackToPostState();
                 //check for transitions
-                if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= 1f)
+                if (Vector3.SqrMagnitude(post.transform.position - transform.position) <= 1f)
                 {
                     ChangeAIState(AIState.Idle);
                     return;
@@ -140,31 +146,52 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     private bool CanHear(GameObject targetGameObject)
     {
-        // looking for target noise maker
-        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();  
+        //grab the noise maker of the target!
+        var noiseMaker = targetGameObject.GetComponent<NoiseMaker>();
+        //if they don't got one, no noise, so it would return false
+        if (noiseMaker == null) 
+        {
+            return false;
+        }
+        //If they're making exactly 0 noise, they still can't be heard
+        if (noiseMaker.volumeDistance <= 0f) 
+        { 
+            return false;
+        }
+        //if noise is actually being made add the volume distance to the hearing distance of the AI
+        float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+        //if the distance is closer than this:
+        if (Vector3.Distance(pawn.transform.position, targetGameObject.transform.position) <= totalDistance)
+        {
+            //then the target is hjeard
+            return true;
+        }
+        else 
+        {
+            //otherwise, we are too far away to be heard
+            return false;
+        
+        }
+
+
+
     }
 
-    private bool CanSee(GameObject targetGameObject)
+    protected bool CanSee(GameObject targetGameObject)
     {
         Vector3 agentToTargetVector = targetGameObject.transform.position - transform.position;
-        if (Vector3.Angle(agentToTargetVector, transform.forward) <= fieldOfView) 
+        if (Vector3.Angle(agentToTargetVector, transform.forward) <= fieldOfView)
         {
-            Debug.Log("I see a player!");
             Vector3 raycastDirection = targetGameObject.transform.position - pawn.transform.position;
+
             RaycastHit hit;
-            Physics.Raycast(transform.position, raycastDirection, out hit);
-            //NOTE: Yes, This code is way different than what was offered in the example, but otherwise I get an error saying that the target
-            // game object is not set to an instance. Magic code ig?
-            if (Physics.Raycast(transform.position, raycastDirection, out hit)) 
+            if (Physics.Raycast(transform.position, raycastDirection.normalized, out hit))
             {
-                if (hit.collider.transform.parent != null) 
+                if (hit.collider != null)
                 {
-                    return (hit.collider.transform.parent.gameObject == targetGameObject);
+                    return (hit.collider.gameObject == targetGameObject);
                 }
-                
-            
             }
-            
         }
         return true;
     }
