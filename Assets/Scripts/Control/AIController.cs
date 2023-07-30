@@ -52,18 +52,9 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     }
                     if (CanHear(playerController.gameObject)) 
                     {
-                        if (CanSee(playerController.gameObject)) 
-                        {
-                            target = playerController.gameObject;
-                            ChangeAIState(AIState.Chase);
-                            return;
-                        }
-                        else 
-                        {
-                            Debug.Log("I can hear you!!");
-                            ChangeAIState(AIState.Scan);
-                            return;
-                        }
+                        Debug.Log("I can hear you!!");
+                        ChangeAIState(AIState.Scan);
+                        return;
                     }
                     else 
                     {
@@ -84,24 +75,12 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     return;
 
                 }
-                if (!CanSee(target))
-                {
-                    target = null;
-                    ChangeAIState(AIState.Scan);
-                    return;
-                }
                 break;
 
             case AIState.Chase:
                 //Do the states behavior
                 DoChaseState();
                 //check for transitions
-                if (!CanSee(target)) 
-                {
-                    target = null;
-                    ChangeAIState(AIState.Scan);
-                    return;
-                }
                 // Checking for distance
                 if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= attackRange) 
                 {
@@ -187,8 +166,9 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
             {
                 if (hit.collider != null)
                 {
+                    Debug.Log(hit.collider.gameObject.name);
+                    Debug.DrawRay(transform.position, raycastDirection, Color.yellow);
                     return (hit.collider.gameObject == targetGameObject);
-
                 }
             }
             return true;
