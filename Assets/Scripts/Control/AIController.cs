@@ -10,12 +10,12 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public enum AIState {  Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost };
 
     public float attackRange = 100f;
-    public AIState currentState = AIState.Scan; //Default State
+    public AIState currentState = AIState.Idle; //Default State
     private float lastStateChangeTime = 0f;
     public GameObject target;
     public Transform post;
     public float fieldOfView = 30f;
-    public float hearingDistance = 0f;
+    public float hearingDistance = 50f;
 
 
 
@@ -45,15 +45,31 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                     
                     if (CanSee(playerController.gameObject)) 
                     {
-                        Debug.Log("I see you!");
+                        Debug.Log("I found ya!");
                         target = playerController.gameObject;
                         ChangeAIState(AIState.Chase);
-                        return;//one decision is made, stop running the code
+                        return; //one decision is made, stop running the code
                     }
                     if (CanHear(playerController.gameObject)) 
                     {
-                        Debug.Log("I can hear you!!");
-                        ChangeAIState(AIState.Scan);
+                        if (CanSee(playerController.gameObject)) 
+                        {
+                            target = playerController.gameObject;
+                            ChangeAIState(AIState.Chase);
+                            return;
+                        }
+                        else 
+                        {
+                            Debug.Log("I can hear you!!");
+                            ChangeAIState(AIState.Scan);
+                            return;
+                        }
+                    }
+                    else 
+                    {
+                        Debug.Log("Nothing going on here!");
+                        ChangeAIState(AIState.Idle);
+                        return;
                     }
 
                 }
@@ -114,6 +130,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 {
                     if (CanSee(playerController.gameObject))
                     {
+                        Debug.Log("Found you after hearing!");
                         target = playerController.gameObject;
                         ChangeAIState(AIState.Chase);
                         return; //one decision is made, stop running the code
@@ -132,6 +149,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 //check for transitions
                 if (Vector3.SqrMagnitude(post.transform.position - transform.position) <= 1f)
                 {
+                    Debug.Log("I'm going back home!");
                     ChangeAIState(AIState.Idle);
                     return;
                 }
@@ -144,37 +162,17 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         }
     }
 
-    private bool CanHear(GameObject targetGameObject)
+    protected bool CanHear(GameObject targetGameObject)
     {
-        //grab the noise maker of the target!
-        var noiseMaker = targetGameObject.GetComponent<NoiseMaker>();
-        //if they don't got one, no noise, so it would return false
-        if (noiseMaker == null) 
+        if (Vector3.Distance(transform.position, targetGameObject.transform.position) <= hearingDistance) 
         {
-            return false;
-        }
-        //If they're making exactly 0 noise, they still can't be heard
-        if (noiseMaker.volumeDistance <= 0f) 
-        { 
-            return false;
-        }
-        //if noise is actually being made add the volume distance to the hearing distance of the AI
-        float totalDistance = noiseMaker.volumeDistance + hearingDistance;
-        //if the distance is closer than this:
-        if (Vector3.Distance(pawn.transform.position, targetGameObject.transform.position) <= totalDistance)
-        {
-            //then the target is hjeard
+            //.. after this we actually DO hear the player
             return true;
         }
         else 
         {
-            //otherwise, we are too far away to be heard
             return false;
-        
         }
-
-
-
     }
 
     protected bool CanSee(GameObject targetGameObject)
@@ -190,10 +188,17 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 if (hit.collider != null)
                 {
                     return (hit.collider.gameObject == targetGameObject);
+
                 }
             }
+            return true;
         }
-        return true;
+        else
+        {
+            return false; //Can't see player, but likley can hear. 
+        }
+        
+        
     }
 
     private void DoIdleState() 
