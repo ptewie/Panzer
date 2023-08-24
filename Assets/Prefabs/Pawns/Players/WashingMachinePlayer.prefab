@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -79.408
       objectReference: {fileID: 0}
+    - target: {fileID: 3706512182380138263, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7677746769232426486, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
       propertyPath: m_Name
       value: WashingMachinePlayer
@@ -218,7 +222,12 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.0016265106
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8427708493670010731, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1103688426767150563, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
 --- !u!4 &437714878013968852 stripped
 Transform:
@@ -272,6 +281,7 @@ MonoBehaviour:
   leftKeyCode: 0
   rightKeyCode: 0
   shootKeyCode: 0
+  isShooting: 0
 --- !u!114 &-1921086148298505127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +296,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3637037943358990503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,3 +312,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firepointTransform: {fileID: 437714878013968852}
+--- !u!114 &4694458866886912828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031655592766186956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d12aadbe029076429daccb099573666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  owner: {fileID: 0}

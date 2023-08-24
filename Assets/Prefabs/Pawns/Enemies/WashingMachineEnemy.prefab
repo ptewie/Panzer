@@ -148,7 +148,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 100
   currentState: 0
+  lastStateChangeTime: 0
   target: {fileID: 0}
+  targetNoise: {x: 0, y: 0, z: 0}
   post: {fileID: 0}
   fieldOfView: 30
   hearingDistance: 50
+  fleeDistance: 0
+  waypoints: []
+  waypointStopDistance: 0

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AIController : Controller  // asbtract means it cannot be instaitated
 {
-    public enum AIState { Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost, Follow };
+    public enum AIState { Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost };
 
     public float attackRange = 100f;
     public AIState currentState = AIState.Idle; //Default State
