@@ -105,6 +105,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 718497694620588508, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+      propertyPath: forwardMoveSpeed
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 718497694620588508, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+      propertyPath: backwardMoveSpeed
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 718497694620588508, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+      propertyPath: machineRotationSpeed
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 5432771745794033945, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
       propertyPath: m_Name
       value: WashingMachineEnemyAlpha
@@ -178,15 +190,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9899b20e06d5946a2ddf0aa7839f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 100
+  attackRange: 200
   currentState: 0
   lastStateChangeTime: 0
   target: {fileID: 0}
   targetNoise: {x: 0, y: 0, z: 0}
   post: {fileID: 0}
-  fieldOfView: 30
-  hearingDistance: 50
-  fleeDistance: 0
+  fieldOfView: 20
+  hearingDistance: 30
+  fleeDistance: 10
   waypoints: []
   waypointStopDistance: 0
-  bullet: {fileID: 1390525935506867676, guid: 2310fd8ed4946354f92703a005d757cb, type: 3}

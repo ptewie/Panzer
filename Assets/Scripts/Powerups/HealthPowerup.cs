@@ -11,8 +11,12 @@ public class HealthPowerup : Powerup
         Health targetHealth = target.gameObject.GetComponent<Health>();
         if (targetHealth != null)
         {
-            Debug.Log("Heal!");
+           Debug.Log("Heal!");
            targetHealth.ApplyHealing(healthToAdd);
+        }
+        else 
+        {
+            Debug.Log("Noheal!");
         }
     }
 

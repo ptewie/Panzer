@@ -19,7 +19,7 @@ public class DamageOnHit : MonoBehaviour
         }
         else
         {
-            Debug.Log(other.gameObject.name);
+            //Debug.Log(other.gameObject.name);
             return;
         }
 

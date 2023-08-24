@@ -59,6 +59,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 406f538bd43df58469d6eb5e5c9d60cf, type: 2}
+    - target: {fileID: 5071362197065071651, guid: 4e75c51cdc0b8b3479acd40b08b20d31, type: 3}
+      propertyPath: forwardMoveSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071362197065071651, guid: 4e75c51cdc0b8b3479acd40b08b20d31, type: 3}
+      propertyPath: backwardMoveSpeed
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 448399484235598590, guid: 4e75c51cdc0b8b3479acd40b08b20d31, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e75c51cdc0b8b3479acd40b08b20d31, type: 3}
@@ -79,14 +87,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75296eaa01b094245a5f4cf2eddce83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 100
+  attackRange: 1000
   currentState: 0
   lastStateChangeTime: 0
   target: {fileID: 0}
   targetNoise: {x: 0, y: 0, z: 0}
   post: {fileID: 0}
-  fieldOfView: 30
-  hearingDistance: 50
+  fieldOfView: 80
+  hearingDistance: 80
   fleeDistance: 0
   waypoints: []
   waypointStopDistance: 0

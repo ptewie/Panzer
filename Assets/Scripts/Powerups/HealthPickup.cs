@@ -9,7 +9,7 @@ public class HealthPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         PowerupManager manager = other.transform.parent.GetComponent<PowerupManager>();
-        if (manager)
+        if (manager != null)
         {
             manager.Add(healthPowerup);
             Destroy(gameObject);

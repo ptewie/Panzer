@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 617277119752185551, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: fireForce
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 617277119752185551, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: machineRotationSpeed
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 5335791957209200138, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
       propertyPath: m_Name
       value: WashingMachineEnemyBravo
@@ -79,14 +87,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47ad82a8eea9e6459457628b39c8be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 100
+  attackRange: 800
   currentState: 0
   lastStateChangeTime: 0
   target: {fileID: 0}
   targetNoise: {x: 0, y: 0, z: 0}
   post: {fileID: 0}
-  fieldOfView: 30
-  hearingDistance: 50
+  fieldOfView: 20
+  hearingDistance: 29
   fleeDistance: 0
-  waypoints: []
-  waypointStopDistance: 0
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  waypointStopDistance: 10
