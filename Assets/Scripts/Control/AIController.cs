@@ -7,15 +7,22 @@ using UnityEngine;
 
 public class AIController : Controller  // asbtract means it cannot be instaitated
 {
-    public enum AIState {  Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost };
+    public enum AIState { Idle, Chase, Flee, Patrol, Attack, Scan, BackToPost, Follow };
 
     public float attackRange = 100f;
     public AIState currentState = AIState.Idle; //Default State
-    private float lastStateChangeTime = 0f;
+    public float lastStateChangeTime = 0f;
     public GameObject target;
+    public Vector3 targetNoise;
     public Transform post;
     public float fieldOfView = 30f;
     public float hearingDistance = 50f;
+    public float fleeDistance;
+    public Transform[] waypoints;
+    public float waypointStopDistance;
+     
+
+    private int currentWaypoint = 0;
 
 
 
@@ -32,7 +39,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         base.Update();  
     }
 
-    public void MakeDecisions() 
+    public virtual void MakeDecisions() 
     {
         switch (currentState)
         {
@@ -114,6 +121,12 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                         ChangeAIState(AIState.Chase);
                         return; //one decision is made, stop running the code
                     }
+                    if (!CanSee(playerController.gameObject))
+                    {
+                        Debug.Log("I can't find anyone!");
+                        ChangeAIState(AIState.Idle);
+                        return;
+                    }
                 }
                 if (Time.time - lastStateChangeTime > 3f) 
                 {
@@ -146,6 +159,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         if (Vector3.Distance(transform.position, targetGameObject.transform.position) <= hearingDistance) 
         {
             //.. after this we actually DO hear the player
+            targetNoise = targetGameObject.transform.position;
             return true;
         }
         else 
@@ -178,25 +192,32 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
             return false; //Can't see player, but likley can hear. 
         }
         
-        
     }
 
-    private void DoIdleState() 
+    //protected void 
+
+
+    public void RestartPatrolState()
+    {
+        //set the currentWaypoint index to 0
+        currentWaypoint = 0;
+    }
+
+    public void DoIdleState() 
     {
         // throw new NotImplementedException(); 
 
     }
 
-    private void DoAttackState()
+    public void DoAttackState()
     {
-        // throw new NotImplementedException();
         pawn.RotateTowards(target.transform.position);
+        pawn.MoveForward();
         pawn.Shoot();
     }
 
-    private void DoChaseState()
+    public virtual void DoChaseState()
     {
-        // throw new NotImplementedException();
         //Turn to face target
         pawn.RotateTowards(target.transform.position);
         // Move forward if facing target
@@ -204,24 +225,45 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     }
 
-    private void DoPatrolState() 
+    public void DoPatrolState() 
     {
-        // throw new NotImplementedException();
+        // if we have enough waypoints in the list...
+        if (waypoints.Length > currentWaypoint)
+        {
+            // go to the current waypoint
+            pawn.RotateTowards(waypoints[currentWaypoint].transform.position);
+            pawn.MoveForward();
+            // if we're close enough to the next waypoint, increment to the next waypoint
+            if (Vector3.Distance(pawn.transform.position, waypoints[currentWaypoint].position) < waypointStopDistance) 
+                {
+                currentWaypoint++;
+                }
+        } else //when last item of array is met, else is called and the function essentially loops 
+        {
+            RestartPatrolState();
+        }
     }
-    private void DoScanState()
+
+
+    public virtual void DoScanState()
     {
-        //Rotate Clockwise
-        pawn.Rotate(1f);
+        //Rotate towards target
+        pawn.RotateTowards(targetNoise);
+        return;
     }
-    private void DoFleeState()
+    public void DoFleeState()
     {
-        // throw new NotImplementedException();
+        //Back away in the opposite direction
+        pawn.MoveBackward();
+
+
     }
-    private void DoBackToPostState()
+    public void DoBackToPostState()
     {
-        // throw new NotImplementedException();
+
         pawn.RotateTowards(post.transform.position);
         pawn.MoveForward();
+        return;
     }
 
     public void ChangeAIState(AIState newState) 

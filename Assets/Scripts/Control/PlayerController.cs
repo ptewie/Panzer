@@ -11,6 +11,7 @@ public class PlayerController : Controller
     public KeyCode leftKeyCode;
     public KeyCode rightKeyCode;
     public KeyCode shootKeyCode;
+    public bool isShooting;
     //Game Objects and classes
 
     // Start is called before the first frame update

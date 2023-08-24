@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5688076332159097580
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5335791957209200138, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_Name
+      value: WashingMachineEnemyBravo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000011589646
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.004284722
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9999908
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00027048524
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.031
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604121310425579754, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.491
+      objectReference: {fileID: 0}
+    - target: {fileID: 5860900565870465891, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0d107b1e76568534a933ef7a443e6c0b, type: 2}
+    m_RemovedComponents:
+    - {fileID: -3408498047292404895, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+--- !u!1 &359322368619932902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5335791957209200138, guid: c7e333dcefa1a414981221d23cb045b6, type: 3}
+  m_PrefabInstance: {fileID: 5688076332159097580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &448399484235598590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359322368619932902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47ad82a8eea9e6459457628b39c8be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 100
+  currentState: 0
+  lastStateChangeTime: 0
+  target: {fileID: 0}
+  targetNoise: {x: 0, y: 0, z: 0}
+  post: {fileID: 0}
+  fieldOfView: 30
+  hearingDistance: 50
+  fleeDistance: 0
+  waypoints: []
+  waypointStopDistance: 0
