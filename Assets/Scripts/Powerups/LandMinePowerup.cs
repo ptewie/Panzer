@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class HealthPowerup : Powerup
+public class LandMinePowerup : Powerup
 {
-    public float healthToAdd;
+    public float damageToDeal;
+    public Pawn owner;
+
+
     public override void Apply(PowerupManager target)
     {
         Health targetHealth = target.gameObject.GetComponent<Health>();
         if (targetHealth != null)
         {
-           Debug.Log("Heal!");
-           targetHealth.ApplyHealing(healthToAdd);
+            Debug.Log("Ouch!");
+           targetHealth.TakeDamage(damageToDeal, owner);
         }
-        else 
+        else
         {
-            Debug.Log("Noheal!");
+            Debug.Log("this should never happen!");
         }
     }
 

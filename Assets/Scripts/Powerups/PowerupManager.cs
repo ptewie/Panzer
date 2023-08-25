@@ -23,7 +23,8 @@ public class PowerupManager : MonoBehaviour
 
     // adds powerup 
     public void Add(Powerup powerupToAdd)
-    {
+    { 
+        Debug.Log("applying powerup!");
         powerupToAdd.Apply(this);
         if (!powerupToAdd.isPermanent)
         {
