@@ -121,6 +121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WashingMachineEnemyAlpha
       objectReference: {fileID: 0}
+    - target: {fileID: 5432771745794033945, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+      propertyPath: m_TagString
+      value: enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5524871375579201529, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -168,6 +172,28 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4664874855189081530, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+--- !u!1 &3849811557123377566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3748359020500121229, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
+  m_PrefabInstance: {fileID: 101787966086725395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6075490112419552973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849811557123377566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd42a0fcfd371b4f8b120a7cc198812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &4478433568493146916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4561873777888734263, guid: 1c4eab6d9d2a51947bacb0a6ef66e558, type: 3}
@@ -199,5 +225,6 @@ MonoBehaviour:
   fieldOfView: 20
   hearingDistance: 30
   fleeDistance: 10
-  waypoints: []
-  waypointStopDistance: 0
+  patrolpoints: []
+  patrolStopDistance: 0
+  currentWaypoint: {fileID: 0}

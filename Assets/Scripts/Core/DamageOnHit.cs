@@ -19,8 +19,8 @@ public class DamageOnHit : MonoBehaviour
         }
         else
         {
-            //Debug.Log(other.gameObject.name);
-            return;
+            Debug.Log(other.gameObject.name);
+            
         }
 
         // Destroy ourselves, whether we did damage or not
@@ -39,7 +39,7 @@ public class DamageOnHit : MonoBehaviour
         else
         {
             Debug.Log(other.name);
-            return;
+            
         }
 
         // Destroy ourselves, whether we did damage or not

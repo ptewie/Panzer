@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour
     public int cols; 
     public float roomWidth = 50.0f;
     public float roomHeight = 50.0f;
-    private Room[,] grid;
+    public Room[,] grid;
     public int mapSeed = 13;
     public enum RandomType { Seeded, Random, MapOfTheDay }
     public RandomType randomType = RandomType.MapOfTheDay;

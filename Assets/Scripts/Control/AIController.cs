@@ -18,11 +18,10 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public float fieldOfView = 30f;
     public float hearingDistance = 50f;
     public float fleeDistance;
-    public Transform[] waypoints;
-    public float waypointStopDistance;
-     
-
-    private int currentWaypoint = 0;
+    public Transform[] patrolpoints;
+    public float patrolStopDistance;
+    private int currentPatrolpoint = 0;
+    public Waypoint currentWaypoint;
 
 
 
@@ -30,6 +29,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     {
         pawn = GetComponent<Pawn>();
         post = transform; //Whereever the enemy is spawned is the idle spot
+        currentWaypoint = GameManager.Instance.GetRandomWaypoint();
         base.Start();
     }
 
@@ -199,8 +199,8 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     public void RestartPatrolState()
     {
-        //set the currentWaypoint index to 0
-        currentWaypoint = 0;
+        //set the currentPatrolpoint index to 0
+        currentPatrolpoint = 0;
     }
 
     public void DoIdleState() 
@@ -228,15 +228,15 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public void DoPatrolState() 
     {
         // if we have enough waypoints in the list...
-        if (waypoints.Length > currentWaypoint)
+        if (patrolpoints.Length > currentPatrolpoint)
         {
             // go to the current waypoint
-            pawn.RotateTowards(waypoints[currentWaypoint].transform.position);
+            pawn.RotateTowards(patrolpoints[currentPatrolpoint].transform.position);
             pawn.MoveForward();
             // if we're close enough to the next waypoint, increment to the next waypoint
-            if (Vector3.Distance(pawn.transform.position, waypoints[currentWaypoint].position) < waypointStopDistance) 
+            if (Vector3.Distance(pawn.transform.position, patrolpoints[currentPatrolpoint].position) < patrolStopDistance) 
                 {
-                currentWaypoint++;
+                currentPatrolpoint++;
                 }
         } else //when last item of array is met, else is called and the function essentially loops 
         {

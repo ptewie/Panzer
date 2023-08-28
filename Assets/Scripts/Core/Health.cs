@@ -13,7 +13,7 @@ public class HealthChanged : UnityEvent<float, float>
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
-    private const float minHealth = 0f;
+    public const float minHealth = 0f;
     public float currentHealth;
     public float maxHealth = 100f;
     public HealthChanged OnHealthChanged = new HealthChanged();
