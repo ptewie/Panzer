@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
 {
     // Setting up game manager that can be referenced from any class in the project. 
     public static GameManager Instance;
-    //example points variable
-    public int points = 0;
+    public List<int> points = new List <int>();
+    public List<int> lives = new List<int>();
     public List<Controller> players = new List<Controller>();
     public List<Controller> enemies = new List<Controller>();
     public List<PawnSpawnPoint> pawnSpawnPoints = new List<PawnSpawnPoint>();
@@ -28,23 +28,25 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public int maxEnemyCount = 4;
-    public int numberOfPlayers = 1;
+    public int numberOfPlayers = 1; //by default max amount of player is 1
     public GameStateChangedEvent OnGameStateChanged = new GameStateChangedEvent();
     public GameState currentGameState;
     private GameState previousGameState;
 
-
+ 
 
 
 
     public IEnumerator SpawnMachineNextFrame()
     {
-        // Write code here
         yield return null;
+        Debug.Log("babaeaba");
+        // Write code here
         // This code runs on the next frame
         SpawnPlayers();
         SpawnEnemies();
         //SpawnEnemy();
+     
     }
 
     public IEnumerator SpawnPlayerMachineNextFrame()
@@ -68,9 +70,47 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject); //this.Gameobject gets the owner
     }
-    void Start() 
+    void Start()
     {
-        FindObjectsOfType<PawnSpawnPoint>();
+
+    }
+
+    public void ChangePlayerAmount(bool isMultiplayer)
+    {
+        if (isMultiplayer) 
+        {
+            numberOfPlayers = 2;
+        }
+        else 
+        {
+            numberOfPlayers = 1;
+        }
+
+    }
+    public bool PlayersHaveLives
+    {
+        get
+        {
+            int totalLives = 0;
+            foreach (int playerLives in lives)
+            {
+                totalLives += playerLives;
+            }
+            return (totalLives > 0);
+        }
+    }
+
+    public int GetPlayerIndex(Pawn source)
+    {
+        foreach (Controller controller in players)
+        {
+            if (controller.ControlledPawn == source)
+            {
+                return (players.IndexOf(controller));
+            }
+        }
+
+        return -1;
     }
 
     public void ChangeGameState(GameState state)
@@ -81,7 +121,7 @@ public class GameManager : MonoBehaviour
     }
     public void SpawnPlayer()
     {
-        if (pawnSpawnPoints.Count <= numberOfPlayers)
+        while (pawnSpawnPoints.Count <= numberOfPlayers)
         {
             Debug.LogError("Not enough spawn points");
             return;
@@ -92,7 +132,7 @@ public class GameManager : MonoBehaviour
             GameObject spawnedPlayer = Instantiate(playerPrefab, spawn.transform.position, Quaternion.identity);
             spawn.spawnedPawn = spawnedPlayer.GetComponent<Pawn>();
             players.Add(spawnedPlayer.GetComponent<Controller>());
-            // make sure enough spawn points exist so that the gane dosen't end up breaking. 
+            // make sure enough spawn points exist so that the game dosen't end up breaking. 
             AdjustPlayerCameras();
         }
         else
@@ -103,17 +143,16 @@ public class GameManager : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        while (enemies.Count < maxEnemyCount)
-        {
-            Debug.Log("Enemy Count: " + enemies.Count);
-            Debug.Log("Max Number of Enemies: " + maxEnemyCount);
-            SpawnEnemy();
-        }
+       while (enemies.Count < maxEnemyCount)
+       {
+           Debug.Log("Enemy Count: " + enemies.Count);
+           Debug.Log("Max Number of Enemies: " + maxEnemyCount);
+           SpawnEnemy();
+       }
     }
     public void SpawnPlayers()
-    {
-        
-        while (players.Count < numberOfPlayers)
+    {   
+        if (players.Count < numberOfPlayers)
         {
             Debug.Log("Player Count: " + players.Count);
             Debug.Log("Number of Players: " + numberOfPlayers);
@@ -129,19 +168,19 @@ public class GameManager : MonoBehaviour
             return;
         }
         PawnSpawnPoint spawn = GetRandomSpawnPoint();
-        if (spawn.spawnedPawn == null)
-        {
-            GameObject spawnedEnemy = Instantiate(enemyPrefab, spawn.transform.position, Quaternion.identity);
-            spawn.spawnedPawn = spawnedEnemy.GetComponent<Pawn>();
-            enemies.Add(spawnedEnemy.GetComponent<Controller>());
-            // MAKE SURE THERE ARE ENOUGH PAWN SPAWN POINTS SO THE GAME NEVER BREAKS
-        }
-        else
-        {
-            SpawnEnemy();
-        }
-
-    }
+      if (spawn.spawnedPawn == null)
+      {
+          GameObject spawnedEnemy = Instantiate(enemyPrefab, spawn.transform.position, Quaternion.identity);
+          spawn.spawnedPawn = spawnedEnemy.GetComponent<Pawn>();
+          enemies.Add(spawnedEnemy.GetComponent<Controller>());
+          // MAKE SURE THERE ARE ENOUGH PAWN SPAWN POINTS SO THE GAME NEVER BREAKS
+      }
+      else
+      {
+          SpawnEnemy();
+      }
+   
+   }
 
     private PawnSpawnPoint GetRandomSpawnPoint()
     {
@@ -152,6 +191,7 @@ public class GameManager : MonoBehaviour
     {
         if (players.Count == 1)
         {
+            Debug.Log("only one player");
             // get player 1 came
             Camera player1Camera = players[0].GetComponentInChildren<Camera>();
 
@@ -162,6 +202,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("two players, setting split screen mode ");
             // get player 1 and player twos camera
             Camera player1Camera = players[0].GetComponentInChildren<Camera>();
             Camera player2Camera = players[1].GetComponentInChildren<Camera>();
@@ -175,7 +216,12 @@ public class GameManager : MonoBehaviour
     }
     public Waypoint GetRandomWaypoint()
     {
-        return waypoints[UnityEngine.Random.Range(0, waypoints.Count)];
+        if (waypoints.Count > 0) 
+        { return waypoints[UnityEngine.Random.Range(0, waypoints.Count)]; }
+        else 
+        {
+            return null;
+        }
 
     }
     public void QuitGame()
@@ -189,6 +235,8 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.GameplayState);
         Time.timeScale = 1f;
         StartCoroutine(SpawnMachineNextFrame());
+        Debug.Log("please for the love of god work");
+
     }
 
     public void OpenOptionsMenu()

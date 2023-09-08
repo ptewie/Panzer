@@ -27,6 +27,10 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     public override void Start()
     {
+        if (GameManager.Instance) //Does the game manger exist
+        {
+            GameManager.Instance.enemies.Add(this); //if so, add PlayerController to the List, which then transfers to "players" list
+        }
         pawn = GetComponent<Pawn>();
         post = transform; //Whereever the enemy is spawned is the idle spot
         currentWaypoint = GameManager.Instance.GetRandomWaypoint();

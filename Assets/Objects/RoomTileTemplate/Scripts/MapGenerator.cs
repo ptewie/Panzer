@@ -11,14 +11,14 @@ public class MapGenerator : MonoBehaviour
     public float roomWidth = 50.0f;
     public float roomHeight = 50.0f;
     public Room[,] grid;
-    public int mapSeed = 13;
+    public int mapSeed = 13; //defualt seed
     public enum RandomType { Seeded, Random, MapOfTheDay }
     public RandomType randomType = RandomType.MapOfTheDay;
 
 
     private void Start()
     {
-        GenerateMap();
+    //GenerateMap();
     }
 
     public void ChangeRandomization(bool isMapOfDay) //Change randomiziation settings
@@ -31,6 +31,11 @@ public class MapGenerator : MonoBehaviour
         {
             randomType = RandomType.Random;
         }
+    }
+
+    public void ChangePlayerAmount(bool isMultiplayer) 
+    {
+    
     }
 
     //Returns random room from roomPrefabs

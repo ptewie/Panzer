@@ -34,14 +34,11 @@ public class AudioManager : MonoBehaviour
         float newVolume = value;
         if (newVolume <= 0)
         {
-            // If we are at zero, set our volume to the lowest value
             newVolume = -80;
         }
         else
         {
-            // We are >0, so start by finding the log10 value 
             newVolume = Mathf.Log10(newVolume);
-            // Make it in the 0-20db range (instead of 0-1 db)
             newVolume = newVolume * 20;
         }
 
@@ -51,30 +48,24 @@ public class AudioManager : MonoBehaviour
     public void OnMasterVolumeChange(float value)
     {
         masterVolume = Mathf.Clamp01(value);
-        // Start with the slider value (assuming our slider runs from 0 to 1)
         float newVolume = ConvertToDecibel(value);
 
-        // Set the volume to the new volume setting
         audioMixer.SetFloat(MASTERVOLUME, newVolume);
     }
 
     public void OnSFXVolumeChange(float value)
     {
         sfxVolume = Mathf.Clamp01(value);
-        // Start with the slider value (assuming our slider runs from 0 to 1)
         float newVolume = ConvertToDecibel(value);
 
-        // Set the volume to the new volume setting
         audioMixer.SetFloat(SFXVOLUME, newVolume);
     }
 
     public void OnBGMVolumeChange(float value)
     {
         bgmVolume = Mathf.Clamp01(value);
-        // Start with the slider value (assuming our slider runs from 0 to 1)
         float newVolume = ConvertToDecibel(value);
 
-        // Set the volume to the new volume setting
         audioMixer.SetFloat(BGMVOLUME, newVolume);
     }
 

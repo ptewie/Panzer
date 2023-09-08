@@ -12,6 +12,7 @@ public class PlayerController : Controller
     public KeyCode rightKeyCode;
     public KeyCode shootKeyCode;
     public bool isShooting;
+    public KeyCode pauseKeyCode;
     //Game Objects and classes
 
     // Start is called before the first frame update
@@ -67,5 +68,10 @@ public class PlayerController : Controller
         {
             pawn.Shoot();
         }
+
+        if (Input.GetKeyDown(pauseKeyCode))
+        {
+            GameManager.Instance.TogglePause();
+          }
     }
 }
