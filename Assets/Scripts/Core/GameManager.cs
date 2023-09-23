@@ -10,7 +10,7 @@ public class GameStateChangedEvent : UnityEvent<GameState, GameState>
 
 }
 
-public enum GameState { TitleState, OptionsState, GameplayState, GameOverState, Credits, Pause};
+public enum GameState { TitleState, OptionsState, GameplayState, GameOverState, Credits, Pause, Victory};
 
 
 
@@ -33,12 +33,17 @@ public class GameManager : MonoBehaviour
     public GameState currentGameState;
     private GameState previousGameState;
     public PlayerHUDManager currentPlayerHUD;
+    public int targetPointTotal = 600; // point total can be set by designers in editor
+    public Pawn playerPawnRef;
 
- 
+    // Method to check for the win condition
+    public bool CheckWinCondition(int currentPointTotal)
+    {
+        return currentPointTotal >= targetPointTotal;
+    }
 
 
-
-    public IEnumerator SpawnMachineNextFrame()
+public IEnumerator SpawnMachineNextFrame()
     {
         yield return null;
         Debug.Log("babaeaba");
@@ -74,6 +79,33 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
+    }
+
+    void Update()
+    {
+            int currentPointTotal = CalculateCurrentPointTotal();
+            if (CheckWinCondition(currentPointTotal))
+            {
+            // Win condition reached!
+            CallVictory();
+            }
+        
+    }
+
+    public int CalculateCurrentPointTotal()
+    {
+        int currentPointTotal = 0;
+
+        // Loop through all players and add their points to the total
+        foreach (Controller player in players)
+        {
+            currentPointTotal += player.points / 2;
+        }
+
+        // Debug log to show the current point total
+        Debug.Log("Current point total: " + currentPointTotal);
+
+        return currentPointTotal;
     }
 
     public void ChangePlayerAmount(bool isMultiplayer)
@@ -286,6 +318,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void CallVictory() 
+    {
+        ChangeGameState(GameState.Victory);
+        Time.timeScale = 1f;
+    }
+
     public void TogglePause()
     {
         if (currentGameState == GameState.Pause)
@@ -297,4 +335,5 @@ public class GameManager : MonoBehaviour
             PauseGame();
         }
     }
+
 }

@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject OptionsMenuObject;
     public GameObject PauseMenuObject;
     public GameObject GameOverObject;
+    public GameObject VictoryObject;
     public GameObject UICamera;
   
     public Slider masterVolumeSlider;
@@ -95,7 +96,18 @@ void Start()
         GameOverObject.SetActive(false);
     }
 
-   public void HandleGameStateChanged(GameState previousState, GameState newState)
+    public void ShowVictory()
+    {
+        VictoryObject.SetActive(true);
+    }
+
+    public void HideVictory()
+    {
+        VictoryObject.SetActive(false);
+    }
+
+
+    public void HandleGameStateChanged(GameState previousState, GameState newState)
    {
         AudioManager.Instance.audioSource.PlayOneShot(AudioManager.Instance.sfxMenuButton);
         switch (previousState)
@@ -111,8 +123,9 @@ void Start()
            case GameState.GameOverState:
                HideGameOver();
                break;
-           case GameState.Credits:
-               // gotta hide credits
+           case GameState.Victory:
+                // gotta hide credits
+                HideVictory();
                break;
            case GameState.Pause:
                HidePauseMenu();
@@ -131,7 +144,8 @@ void Start()
            case GameState.GameOverState:
                ShowGameOver();
                break;
-           case GameState.Credits:
+           case GameState.Victory:
+                ShowVictory();
                break;
            case GameState.Pause:
                ShowPauseMenu();

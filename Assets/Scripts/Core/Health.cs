@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
     {
         machinePawnRef = GetComponent<Pawn>();
 
-        if (machinePawnRef == null) 
+        if (machinePawnRef == null)
         {
             machinePawnRef = GetComponentInParent<Pawn>();
         }
@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void ResetHealth() 
+    public void ResetHealth()
     {
         currentHealth = maxHealth;
     }
@@ -48,7 +48,7 @@ public class Health : MonoBehaviour
         AudioManager.Instance.audioSource.PlayOneShot(AudioManager.Instance.sfxMachineHurt);
         if (Mathf.Approximately(currentHealth, minHealth))
         {
-            
+
             Die(machinePawnRef);
         }
     }
@@ -67,7 +67,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public void ApplyHurt(float value) 
+    public void ApplyHurt(float value)
     {
         currentHealth = Mathf.Clamp(currentHealth - value, minHealth, maxHealth);
         OnHealthChanged.Invoke(currentHealth, maxHealth);
@@ -102,7 +102,7 @@ public class Health : MonoBehaviour
         }
 
         // Check if playerIndex is valid and if it is a player, try to respawn the player
-      if (playerIndex >= 0 && playerIndex < GameManager.Instance.players.Count)
+        if (playerIndex >= 0 && playerIndex < GameManager.Instance.players.Count)
         {
             if (GameManager.Instance.players[playerIndex].lives > 0)
             {
@@ -110,7 +110,7 @@ public class Health : MonoBehaviour
             }
         }
 
-        if(machineToDie.machineController.GetType() == typeof(PlayerController))
+        if (machineToDie.machineController.GetType() == typeof(PlayerController))
         {
             Debug.Log("player controller killed!");
             machineToDie.machineController.removeLife();
@@ -125,7 +125,8 @@ public class Health : MonoBehaviour
             }
             if (machineToDie.machineController.lives >= 0)
             {
-                GameManager.Instance.ResetPlayer(machineToDie.machineController);            }
+                GameManager.Instance.ResetPlayer(machineToDie.machineController);
+            }
             else
             {
                 //call game over script
@@ -134,13 +135,13 @@ public class Health : MonoBehaviour
             }
 
         }
-        else 
+        else
         {
             Debug.Log("enemy controller killed!");
-            GameManager.Instance.currentPlayerHUD.UpdateScore();
-            Destroy(gameObject.transform.parent.gameObject); //When enemy dies, we need to kill it's transform as well. 
 
-     
+            GameManager.Instance.currentPlayerHUD.UpdateScore();
+            machinePawnRef.machineController.addPoints(20);
+            Destroy(gameObject.transform.parent.gameObject); //When enemy dies, we need to kill it's transform as well. 
         }
     }
 }

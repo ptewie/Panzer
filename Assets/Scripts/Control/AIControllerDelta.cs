@@ -89,7 +89,7 @@ public class AIControllerDelta : AIController
             case AIState.Flee:
                 //Do the states behavior  
                 DoFleeState();
-                if (Time.time - lastStateChangeTime > 3f)
+                if (Time.deltaTime - lastStateChangeTime > 3f)
                 {
                     ChangeAIState(AIState.Scan); // looping back to scan
                     return;

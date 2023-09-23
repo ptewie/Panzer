@@ -46,6 +46,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     public void OnDestroy()
     {
         GameManager.Instance.enemies.Remove(this); //When enemy dies, remove from list
+        Destroy(gameObject); // Destroy the GameObject
     }
 
     public virtual void MakeDecisions() 
