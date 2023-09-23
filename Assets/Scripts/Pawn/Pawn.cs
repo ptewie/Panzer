@@ -7,10 +7,13 @@ public abstract class Pawn : MonoBehaviour
 
     protected Mover mover;
     protected Shooter shooter;
+    public Controller machineController;
+    public int pointValue;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        machineController = GetComponent<Controller>();
     }
 
     // Update is called once per frame

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public GameStateChangedEvent OnGameStateChanged = new GameStateChangedEvent();
     public GameState currentGameState;
     private GameState previousGameState;
+    public PlayerHUDManager currentPlayerHUD;
 
  
 
@@ -92,9 +93,9 @@ public class GameManager : MonoBehaviour
         get
         {
             int totalLives = 0;
-            foreach (int playerLives in lives)
+            foreach (PlayerController player in players)
             {
-                totalLives += playerLives;
+                totalLives += player.lives;
             }
             return (totalLives > 0);
         }
@@ -131,14 +132,22 @@ public class GameManager : MonoBehaviour
         {
             GameObject spawnedPlayer = Instantiate(playerPrefab, spawn.transform.position, Quaternion.identity);
             spawn.spawnedPawn = spawnedPlayer.GetComponent<Pawn>();
+            currentPlayerHUD = spawnedPlayer.GetComponent<PlayerHUDManager>(); //setting hud
             players.Add(spawnedPlayer.GetComponent<Controller>());
             // make sure enough spawn points exist so that the game dosen't end up breaking. 
-            AdjustPlayerCameras();
+            //AdjustPlayerCameras();
         }
         else
         {
-            SpawnPlayer();
+            
         }
+    }
+
+    public void ResetPlayer(Controller spawnedPlayer) 
+    {
+        PawnSpawnPoint spawn = GetRandomSpawnPoint();
+        spawnedPlayer.GetComponent<Health>().ResetHealth();
+        spawnedPlayer.gameObject.transform.SetPositionAndRotation(spawn.transform.position, Quaternion.identity);
     }
 
     public void SpawnEnemies()
@@ -189,7 +198,7 @@ public class GameManager : MonoBehaviour
 
     public void AdjustPlayerCameras()
     {
-        if (players.Count == 1)
+        if (players.Count == 0)
         {
             Debug.Log("only one player");
             // get player 1 came
@@ -205,13 +214,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("two players, setting split screen mode ");
             // get player 1 and player twos camera
             Camera player1Camera = players[0].GetComponentInChildren<Camera>();
-            Camera player2Camera = players[1].GetComponentInChildren<Camera>();
 
             // set player 1 camera location
             player1Camera.rect = new Rect(0, 0, 0.5f, 1f);
 
             // set player 2's camera location
-            player2Camera.rect = new Rect(0.5f, 0f, 0.5f, 1f);
+           // player2Camera.rect = new Rect(0.5f, 0f, 0.5f, 1f);
         }
     }
     public Waypoint GetRandomWaypoint()
@@ -244,6 +252,7 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.OptionsState);
     }
 
+
     public void CloseOptionsMenu()
     {
         ChangeGameState(previousGameState);
@@ -268,6 +277,12 @@ public class GameManager : MonoBehaviour
     public void UnpauseGame()
     {
         ChangeGameState(GameState.GameplayState);
+        Time.timeScale = 1f;
+    }
+
+    public void CallGameOver() 
+    {
+        ChangeGameState(GameState.GameOverState);
         Time.timeScale = 1f;
     }
 

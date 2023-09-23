@@ -30,15 +30,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7677746769232426486}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2208675986435690712}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!54 &3706512182380138263
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -50,10 +50,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 96
   m_CollisionDetection: 0
 --- !u!114 &7996775507910058044
 MonoBehaviour:
@@ -81,6 +81,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2887193035275855155}
+        m_TargetAssemblyTypeName: MachinePawn, Assembly-CSharp
+        m_MethodName: UpdateHealthBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  machinePawnRef: {fileID: 2887193035275855155}
 --- !u!114 &5929824867197587575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a056f3c7fa38a41aca099e0f9ac51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  machineController: {fileID: 0}
+  pointValue: 0
   forwardMoveSpeed: 10
   backwardMoveSpeed: 9
   machineRotationSpeed: 10
@@ -114,6 +132,7 @@ MonoBehaviour:
   shellLifespan: 15
   shellPrefab: {fileID: 1390525935506867676, guid: 2310fd8ed4946354f92703a005d757cb, type: 3}
   shotCooldownTimer: 1
+  healthBar: {fileID: 0}
 --- !u!114 &1103688426767150563
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MachineMover))]
 [RequireComponent(typeof(MachineShooter))]
@@ -17,12 +18,14 @@ public class MachinePawn : Pawn
     public GameObject shellPrefab;
     public float shotCooldownTimer = 1f;
     private float secondsSinceLastShot = Mathf.Infinity;
+    public Image healthBar;
 
 
 
     public override void MoveBackward()
     {
         mover.Move(backwardMoveSpeed, backwardDirection);
+
         base.MoveBackward();
     }
 
@@ -63,11 +66,19 @@ public override void Start()
 
     public override void Shoot()
     {
+
         if (secondsSinceLastShot > shotCooldownTimer)
         {
             shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
             secondsSinceLastShot = 0f;
+            AudioManager.Instance.audioSource.PlayOneShot(AudioManager.Instance.sfxMachineFire);
             base.Shoot();
         }
+    }
+
+    public void UpdateHealthBar(float currentHealth, float maxHealth)
+    {
+
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 }

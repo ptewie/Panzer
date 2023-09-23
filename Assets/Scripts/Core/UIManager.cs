@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -16,8 +17,21 @@ public class UIManager : MonoBehaviour
     public Slider bgmVolumeSlider;
     public Slider sfxVolumeSlider;
 
-    // Start is called before the first frame update
-    void Start()
+public class UIGameplay : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI pointsText;
+
+    public void UpdatePointsText()
+    {
+        if (GameManager.Instance.players.Count > 0)
+        {
+            pointsText.text = GameManager.Instance.players[0].points.ToString();
+        }
+    }
+}
+
+// Start is called before the first frame update
+void Start()
     {
      GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged);
  
@@ -31,6 +45,7 @@ public class UIManager : MonoBehaviour
     {
 
     }
+
 
     public void ToggleUICamera()
     {
@@ -72,17 +87,18 @@ public class UIManager : MonoBehaviour
  
    public void ShowGameOver()
    {
- 
-   }
+        GameOverObject.SetActive(true);
+    }
  
    public void HideGameOver()
    {
- 
-   }
+        GameOverObject.SetActive(false);
+    }
 
    public void HandleGameStateChanged(GameState previousState, GameState newState)
    {
-       switch (previousState)
+        AudioManager.Instance.audioSource.PlayOneShot(AudioManager.Instance.sfxMenuButton);
+        switch (previousState)
        {
            case GameState.TitleState:
                HideTitleScreenUI();

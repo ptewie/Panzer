@@ -8,8 +8,8 @@ public class LandMinePickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PowerupManager manager = other.transform.parent.GetComponent<PowerupManager>();
-        if (manager != null)
+        PowerupManager manager = other.GetComponent<PowerupManager>();
+        if (manager)
         {
             manager.Add(landMinePowerup);
             Destroy(gameObject);

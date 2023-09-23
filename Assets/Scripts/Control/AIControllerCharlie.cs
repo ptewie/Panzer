@@ -6,7 +6,7 @@ public class AIControllerCharlie : AIController
 {
     public GameObject leader;
 
-    protected void FindNearestEnemy()
+    protected void FindNearestPawn()
     {
         //Get a list of all pawns 
         Pawn[] allMachines = FindObjectsOfType<Pawn>();

@@ -83,3 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39584e9aebf739b4d885dbef0866f6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  landMinePowerup:
+    duration: 0
+    isPermanent: 1
+    damageToDeal: 20
+    owner: {fileID: 0}

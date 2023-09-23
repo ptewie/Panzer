@@ -135,28 +135,6 @@ PrefabInstance:
     - {fileID: 4873748366442717590, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
     - {fileID: 1103688426767150563, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
---- !u!1 &3748359020500121229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1579949517369707106, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
-  m_PrefabInstance: {fileID: 2443698799769910511}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4810312966686782718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3748359020500121229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dd42a0fcfd371b4f8b120a7cc198812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 100
-  maxHealth: 100
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5432771745794033945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7677746769232426486, guid: 624dd7178c810c2478ac17b592fb4f2f, type: 3}
@@ -174,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb63fc2fea0ae643b69587f182bf677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: 0
+  lives: 0
   attackRange: 100
   currentState: 0
   lastStateChangeTime: 0
@@ -186,3 +166,21 @@ MonoBehaviour:
   patrolpoints: []
   patrolStopDistance: 0
   currentWaypoint: {fileID: 0}
+--- !u!114 &7456898838230379953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5432771745794033945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd42a0fcfd371b4f8b120a7cc198812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  machinePawnRef: {fileID: 0}

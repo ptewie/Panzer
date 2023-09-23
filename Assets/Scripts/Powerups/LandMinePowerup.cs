@@ -11,6 +11,7 @@ public class LandMinePowerup : Powerup
     public override void Apply(PowerupManager target)
     {
         Health targetHealth = target.gameObject.GetComponent<Health>();
+        owner = target.gameObject.GetComponent<Pawn>();
         if (targetHealth != null)
         {
             Debug.Log("Ouch!");

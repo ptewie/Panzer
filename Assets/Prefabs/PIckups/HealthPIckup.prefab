@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPowerup:
-    duration: 0
+    duration: 20
     isPermanent: 1
     healthToAdd: 20
 --- !u!1 &7248995989358974574

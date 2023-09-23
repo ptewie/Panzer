@@ -5,37 +5,79 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerHUD : MonoBehaviour
+public class PlayerHUDManager : MonoBehaviour
 {
     private Controller controller;
     private int playerIndex;
     public TMP_Text livesText;
     public TMP_Text scoreText;
     public Image healthBar;
-
+    public Pawn machinePawnRef;
     private void Start()
     {
+        machinePawnRef = GetComponent<Pawn>();
+
+        if (machinePawnRef == null)
+        {
+            machinePawnRef = GetComponentInParent<Pawn>();
+        }
+
         controller = GetComponentInParent<Controller>();
-        // TODO: Create a for loop that loops through the player controllers on gamemanger
-        // and returns the index that matches.
+        Debug.Log("controller: " + controller);
+
+        if (controller != null)
+        {
+            playerIndex = GameManager.Instance.GetPlayerIndex(controller.ControlledPawn);
+            Debug.Log("playerindex: " + playerIndex);
+        }
+
+        // Check if scoreText is assigned
+        if (scoreText != null)
+        {
+            Debug.Log("scoreText: " + scoreText);
+        }
+        else
+        {
+            Debug.LogError("wee woo wee woo no score text assigned");
+        }
+
         UpdateScore();
-        // This also will work...
-        // gameObject.GetComponentInParent<Health>().OnHealthChanged.AddListener(UpdateHealthBar);
+        UpdateLives();
+        gameObject.GetComponentInParent<Health>().OnHealthChanged.AddListener(UpdateHealthBar);
     }
 
     public void UpdateScore()
     {
-        // TODO: Use the above to finish this
-        //scoreText.text = "Score: " + GameManager.Instance.points[0];
+        if (controller != null)
+        {
+            //get playert index from game manager
+            int playerIndex = GameManager.Instance.GetPlayerIndex(controller.ControlledPawn);
+
+            if (playerIndex >= 0 && playerIndex < controller.points)
+            {
+                scoreText.text = "Score: " + controller.points;
+            }
+            else
+            {
+                // if index is out of range (goddamit)
+                scoreText.text = "Score: N/A";
+            }
+        }
     }
 
     public void UpdateLives()
     {
-
+        if (controller != null)
+        {
+            livesText.text = "Lives: " + controller.lives;
+        }
     }
 
     public void UpdateHealthBar(float currentHealth, float maxHealth)
     {
-        healthBar.fillAmount = currentHealth / maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = currentHealth / maxHealth;
+        }
     }
 }

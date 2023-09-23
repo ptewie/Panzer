@@ -15,9 +15,17 @@ public class AudioManager : MonoBehaviour
     public float sfxVolume = 1.0f;
 
     public AudioMixer audioMixer;
+    public AudioSource audioSource;
+    [Header("Sounds")]
+    public AudioClip sfxMenuButton;
+    public AudioClip sfxMachineFire;
+    public AudioClip sfxMachineHurt;
+    public AudioClip sfxMachineDeath;
+    public AudioClip sfxPickupGet;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         if (Instance == null)
         {
             Instance = this;

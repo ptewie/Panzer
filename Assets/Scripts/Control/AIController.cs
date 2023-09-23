@@ -29,7 +29,7 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
     {
         if (GameManager.Instance) //Does the game manger exist
         {
-            GameManager.Instance.enemies.Add(this); //if so, add PlayerController to the List, which then transfers to "players" list
+            GameManager.Instance.enemies.Add(this); //if so, add AIController to the List, which then transfers to "enemies" list
         }
         pawn = GetComponent<Pawn>();
         post = transform; //Whereever the enemy is spawned is the idle spot
@@ -39,8 +39,13 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     public override void Update()
     {
-        MakeDecisions();
-        base.Update();  
+            MakeDecisions();
+            base.Update();
+    }
+
+    public void OnDestroy()
+    {
+        GameManager.Instance.enemies.Remove(this); //When enemy dies, remove from list
     }
 
     public virtual void MakeDecisions() 
@@ -51,40 +56,47 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 //Do the states behavior
                 DoIdleState();
                 //check for transitions
-                foreach (Controller playerController in GameManager.Instance.players) 
+                if (GameManager.Instance.players.Count > 0)
                 {
-                    
-                    if (CanSee(playerController.gameObject)) 
+                    foreach (Controller playerController in GameManager.Instance.players)
                     {
-                        Debug.Log("I found ya!");
-                        target = playerController.gameObject;
-                        ChangeAIState(AIState.Chase);
-                        return; //one decision is made, stop running the code
-                    }
-                    if (CanHear(playerController.gameObject)) 
-                    {
-                        Debug.Log("I can hear you!!");
-                        ChangeAIState(AIState.Scan);
-                        return;
-                    }
-                    else 
-                    {
-                        Debug.Log("Nothing going on here!");
-                        ChangeAIState(AIState.Idle);
-                        return;
-                    }
 
-                }
-                break;
+                        if (CanSee(playerController.gameObject))
+                        {
+                            Debug.Log("I found ya!");
+                            target = playerController.gameObject;
+                            ChangeAIState(AIState.Chase);
+                            return; //one decision is made, stop running the code
+                        }
+                        if (CanHear(playerController.gameObject))
+                        {
+                            Debug.Log("I can hear you!!");
+                            ChangeAIState(AIState.Scan);
+                            return;
+                        }
+                        else
+                        {
+                            Debug.Log("Nothing going on here!");
+                            ChangeAIState(AIState.Idle);
+                            return;
+                        }
+
+                    }
+                    break;
+                } break;
             case AIState.Attack:
                 //Do the states behavior
                 DoAttackState();
                 //check for transitions
-                if (Vector3.SqrMagnitude(target.transform.position - transform.position) > attackRange) 
+                if (target != null) 
                 {
-                    ChangeAIState(AIState.Chase);
-                    return;
+                    if (Vector3.SqrMagnitude(target.transform.position - transform.position) > attackRange)
+                    {
+                        ChangeAIState(AIState.Chase);
+                        return;
 
+                    }
+                    
                 }
                 break;
 
@@ -116,28 +128,30 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
                 //Do the states behavior
                 DoScanState();
                 //check for transitions
-                foreach (Controller playerController in GameManager.Instance.players)
+                if (GameManager.Instance.players.Count > 0)
                 {
-                    if (CanSee(playerController.gameObject))
+                    foreach (Controller playerController in GameManager.Instance.players)
                     {
-                        Debug.Log("Found you after hearing!");
-                        target = playerController.gameObject;
-                        ChangeAIState(AIState.Chase);
-                        return; //one decision is made, stop running the code
+                        if (CanSee(playerController.gameObject))
+                        {
+                            Debug.Log("Found you after hearing!");
+                            target = playerController.gameObject;
+                            ChangeAIState(AIState.Chase);
+                            return; //one decision is made, stop running the code
+                        }
+                        if (!CanSee(playerController.gameObject))
+                        {
+                            Debug.Log("I can't find anyone!");
+                            ChangeAIState(AIState.Idle);
+                            return;
+                        }
                     }
-                    if (!CanSee(playerController.gameObject))
+                    if (Time.time - lastStateChangeTime > 3f)
                     {
-                        Debug.Log("I can't find anyone!");
-                        ChangeAIState(AIState.Idle);
+                        ChangeAIState(AIState.BackToPost);
                         return;
                     }
-                }
-                if (Time.time - lastStateChangeTime > 3f) 
-                {
-                    ChangeAIState(AIState.BackToPost);
-                    return;
-                }
-                break;
+                } break;
 
             case AIState.BackToPost:
                 //Do the states behavior
@@ -215,18 +229,23 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
 
     public void DoAttackState()
     {
-        pawn.RotateTowards(target.transform.position);
-        pawn.MoveForward();
-        pawn.Shoot();
+        if (target != null && pawn != null)        
+        {
+            pawn.RotateTowards(target.transform.position);
+            pawn.MoveForward();
+            pawn.Shoot();
+        }
     }
 
     public virtual void DoChaseState()
     {
-        //Turn to face target
-        pawn.RotateTowards(target.transform.position);
-        // Move forward if facing target
-        pawn.MoveForward();
-
+        if (target != null && pawn != null)
+        {
+            //Turn to face target
+            pawn.RotateTowards(target.transform.position);
+            // Move forward if facing target
+            pawn.MoveForward();
+        }
     }
 
     public void DoPatrolState() 
@@ -275,6 +294,15 @@ public class AIController : Controller  // asbtract means it cannot be instaitat
         lastStateChangeTime = Time.time;
         currentState = newState;
 
+    }
+
+    public override void removeLife()
+    {
+        lives -= 1;
+    }
+    public override void addPoints(int pointsToAdd)
+    {
+        points += pointsToAdd;
     }
 }
 

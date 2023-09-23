@@ -27,41 +27,59 @@ public class AIControllerAlpha : AIController
                 //Do the states behavior
                 DoIdleState();
                 //check for transitions
-                foreach (Controller playerController in GameManager.Instance.players)
+                if (GameManager.Instance.players.Count > 0) 
                 {
-
-                    if (CanHear(playerController.gameObject)) //FSM is similar to AI Controller, but with some changes to reflect Alpha's "impulsibness"
+                    foreach (Controller playerController in GameManager.Instance.players)
                     {
-                        Debug.Log("I can hear you!!");
-                        target = playerController.gameObject;
-                        ChangeAIState(AIState.Chase);
-                        return;
-                    }
-                    else
-                    {
-                        Debug.Log("Nothing going on here!");
-                        ChangeAIState(AIState.Scan);
-                        return;
-                    }
 
-                }
-                break;
+                        if (playerController != null && playerController.gameObject != null && CanHear(playerController.gameObject)) 
+                        {
+                            Debug.Log("I can hear you!!");
+                            target = playerController.gameObject;
+                            ChangeAIState(AIState.Chase);
+                            return;
+                        }
+                        else
+                        {
+                            Debug.Log("Nothing going on here!");
+                            ChangeAIState(AIState.Scan);
+                            return;
+                        }
+
+                    }
+                } break;
+
             case AIState.Attack:
                 //Do the states behavior
                 DoAttackState();
                 //check for transitions
-                if (Vector3.SqrMagnitude(target.transform.position - transform.position) > attackRange)
+                 if (target != null) 
                 {
-                    ChangeAIState(AIState.Chase);
-                    return;
+                    if (Vector3.SqrMagnitude(target.transform.position - transform.position) > attackRange)
+                    {
+                        ChangeAIState(AIState.Chase);
+                        return;
 
-                }
-                break;
+                    }
+                    else 
+                    {
+                        // case where target is destroyed
+                        Debug.Log("target is null, returning to idle");
+                        ChangeAIState(AIState.Idle);
+                        return;
+                    }
+                }   break;
 
             case AIState.Chase:
                 //Do the states behavior
                 DoChaseState();
                 //check for transitions
+                if (target == null)
+                {
+                    Debug.Log("target is null, let's go back to idle.");
+                    ChangeAIState(AIState.Idle);
+                    return;
+                }
                 // Checking for distance
                 if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= attackRange)
                 {
@@ -79,7 +97,7 @@ public class AIControllerAlpha : AIController
             case AIState.Flee:
                 //Do the states behavior  
                 DoFleeState();
-                if (Vector3.SqrMagnitude(target.transform.position - transform.position) <= attackRange)
+                if (target != null && Vector3.SqrMagnitude(target.transform.position - transform.position) <= attackRange)
                 {
                     ChangeAIState(AIState.Attack);
                     return;
@@ -105,28 +123,31 @@ public class AIControllerAlpha : AIController
                 //Do the states behavior
                 DoScanState();
                 //check for transitions
-                foreach (Controller playerController in GameManager.Instance.players)
+                if (GameManager.Instance.players.Count > 0) 
                 {
-                    if (CanSee(playerController.gameObject))
+                    foreach (Controller playerController in GameManager.Instance.players)
                     {
-                        Debug.Log("Found you!");
-                        target = playerController.gameObject;
-                        ChangeAIState(AIState.Chase);
-                        return; 
+                        if (playerController != null && playerController.gameObject != null && CanSee(playerController.gameObject))
+                        {
+                            Debug.Log("Found you!");
+                            target = playerController.gameObject;
+                            ChangeAIState(AIState.Chase);
+                            return;
+                        }
+                        if (playerController != null && playerController.gameObject != null && !CanSee(playerController.gameObject))
+                        {
+                            Debug.Log("I can't find anyone!");
+                            ChangeAIState(AIState.Idle); //Goes back to idle for "regular attitude" they learned nothing
+                            return;
+                        }
                     }
-                    if (!CanSee(playerController.gameObject))
+                    if (Time.time - lastStateChangeTime > 3f)
                     {
-                        Debug.Log("I can't find anyone!");
-                        ChangeAIState(AIState.Idle); //Goes back to idle for "regular attitude" they learned nothing
+                        ChangeAIState(AIState.BackToPost); //Will continously loop between BackToPost and Scan 
                         return;
                     }
-                }
-                if (Time.time - lastStateChangeTime > 3f)
-                {
-                    ChangeAIState(AIState.BackToPost); //Will continously loop between BackToPost and Scan 
-                    return;
-                }
-                break;
+                   
+                } break;
 
             case AIState.BackToPost:
                 //Do the states behavior

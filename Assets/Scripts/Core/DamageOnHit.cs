@@ -33,6 +33,7 @@ public class DamageOnHit : MonoBehaviour
         // Only damage if it has a Health component
         if (otherHealth)
         {
+
             // Do damage
             otherHealth.TakeDamage(damage, owner);
         }

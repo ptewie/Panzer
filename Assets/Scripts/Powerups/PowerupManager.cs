@@ -26,6 +26,7 @@ public class PowerupManager : MonoBehaviour
     { 
         Debug.Log("applying powerup!");
         powerupToAdd.Apply(this);
+        AudioManager.Instance.audioSource.PlayOneShot(AudioManager.Instance.sfxPickupGet);
         if (!powerupToAdd.isPermanent)
         {
             powerups.Add(powerupToAdd);
